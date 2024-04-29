@@ -18,8 +18,6 @@ public class BinaryTrees {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean out = false;
-        boolean outMenu;
-        int op;
         boolean fullLoad = false;
         String menu = """ 
 ********* Menu *********
@@ -151,7 +149,6 @@ public class BinaryTrees {
             Scanner scanner = new Scanner(file);
             String line;
             String[] str;
-            int i;
 
             line = scanner.nextLine();
             str = line.split(" ");
