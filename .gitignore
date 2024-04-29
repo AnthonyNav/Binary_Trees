@@ -12,6 +12,11 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+### tarjet files
+target/classes
+target/generated-sources
+target/maven-status
+
 # AWS User-specific
 .idea/**/aws.xml
 
