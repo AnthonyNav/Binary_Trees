@@ -54,8 +54,6 @@ public class BinaryTrees {
                     System.out.println("Dame el dato a insertar");
                     if (tree.isEmpty()) tree.setRoot(new BinaryNode(scan.nextInt()));
                     else tree.insertNode(scan.nextInt(), tree.getRoot());
-                    System.out.println("\n Arbol:");
-                    tree.getRoot().inorden();
                     break;
                 case 2:
                     // Calculate the depth of a node
@@ -76,26 +74,27 @@ public class BinaryTrees {
 
                     break;
                 case 8:
-
-
+                    if (!tree.isEmpty()){
+                        System.out.print("Preorden: ");
+                        tree.getRoot().preorden();
+                        System.out.println();
+                    } else System.out.println("No existen elementos");
                     break;
                 case 9:
                     if (!tree.isEmpty()){
-                        System.out.println("Preorden: ");
-                        tree.getRoot().preorden();
+                        System.out.print("Inorden: ");
+                        tree.getRoot().inorden();
+                        System.out.println();
                     } else System.out.println("No existen elementos");
                     break;
                 case 10:
                     if (!tree.isEmpty()){
-                        System.out.println("Inorden: ");
-                        tree.getRoot().inorden();
+                        System.out.print("postorden: ");
+                        tree.getRoot().postorden();
+                        System.out.println();
                     } else System.out.println("No existen elementos");
                     break;
                 case 11:
-                    if (!tree.isEmpty()){
-                        System.out.println("postorden: ");
-                        tree.getRoot().postorden();
-                    } else System.out.println("No existen elementos");
 
                     break;
                 case 12:
@@ -106,13 +105,15 @@ public class BinaryTrees {
                     break;
                 case 14:
                     fullLoad = false;
+                    System.out.println("\n\nDesea probar con otro arbol?\n1)Si\n2)No");
+                    out = scan.nextInt() == 2;
                     break;
                 default:
 
                     break;
+
             }
-            System.out.println("\n\nDesea probar con otro arbol?\n1)Si\n2)No");
-            out = scan.nextInt() == 2;
+
         }
     }
 
