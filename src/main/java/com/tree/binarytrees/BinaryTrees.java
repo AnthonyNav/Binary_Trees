@@ -6,6 +6,8 @@ package com.tree.binarytrees;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -65,13 +67,45 @@ public class BinaryTrees {
 
                     break;
                 case 5:
-
+                    // Obtener los hermanos de un nodo
+                    System.out.println("Ingrese el valor del nodo del cual desea obtener el hermano:");
+                    int nodeValue = scan.nextInt();
+                    BinaryNode hermano = getHermano(tree.getRoot(), nodeValue);
+                    if (hermano != null) {
+                        System.out.println("El hermano de " + nodeValue + " es: " + hermano.getInfo());
+                    } else {
+                        System.out.println("El nodo " + nodeValue + " no tiene hermano en este arbol");
+                    }
                     break;
                 case 6:
-
+                    // Obtener los ancestros de un nodo
+                    System.out.println("Ingrese el valor del nodo del cual desea obtener los ancestros:");
+                    int nodoAncestros = scan.nextInt();
+                    List<Integer> ancestros = getAncestros(nodoAncestros);
+                    if (!ancestros.isEmpty()) {
+                        System.out.print("Los ancestros de " + nodoAncestros + " son: ");
+                        for (int ancestro : ancestros) {
+                            System.out.print(ancestro + " ");
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("El nodo " + nodoAncestros + " no tiene ancestros en este arbol");
+                    }
                     break;
                 case 7:
-
+                    // Obtener los descendientes de un nodo
+                    System.out.println("Ingrese el valor del nodo del cual desea obtener los descendientes:");
+                    int nodoDescendientes = scan.nextInt();
+                    List<Integer> descendientes = getDescendientes(nodoDescendientes);
+                    if (!descendientes.isEmpty()) {
+                        System.out.print("Los descendientes de " + nodoDescendientes + " son: ");
+                        for (int descendiente : descendientes) {
+                            System.out.print(descendiente + " ");
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("El nodo " + nodoDescendientes + " no tiene descendientes en este arbol");
+                    }
                     break;
                 case 8:
                     if (!tree.isEmpty()){
@@ -234,6 +268,79 @@ public class BinaryTrees {
 
         }
         return true;
+    }
+
+    public static BinaryNode getHermano(BinaryNode raiz, int value) {
+        return encontrarHermano(raiz, value, null);
+    }
+
+    private static BinaryNode encontrarHermano(BinaryNode node, int value, BinaryNode parent) {
+        if (node == null) {
+            return null;
+        }
+
+        if (node.getInfo() == value) {
+            if (parent == null) {
+                return null; // El nodo dado es la raíz, no tiene hermano
+            }
+
+            if (parent.getLeftNode() != null && parent.getLeftNode().getInfo() == value) {
+                return parent.getRightNode();
+            } else {
+                return parent.getLeftNode();
+            }
+        }
+
+        // Buscar en el subárbol izquierdo y derecho
+        BinaryNode hermanoIzquierdo = encontrarHermano(node.getLeftNode(), value, node);
+        BinaryNode hermanoDerecho = encontrarHermano(node.getRightNode(), value, node);
+
+        return hermanoIzquierdo != null ? hermanoIzquierdo : hermanoDerecho;
+    }
+
+    public static List<Integer> getAncestros(int value) {
+        List<Integer> ancestros = new ArrayList<>();
+        encontrarAncestros(tree.getRoot(), value, ancestros);
+        return ancestros;
+    }
+
+    private static boolean encontrarAncestros(BinaryNode node, int value, List<Integer> ancestros) {
+        if (node == null) {
+            return false;
+        }
+
+        if (node.getInfo() == value) {
+            return true;
+        }
+
+        // Buscar en el subárbol izquierdo y derecho
+        if (encontrarAncestros(node.getLeftNode(), value, ancestros) || encontrarAncestros(node.getRightNode(), value, ancestros)) {
+            ancestros.add(node.getInfo());
+            return true;
+        }
+
+        return false;
+    }
+
+    private static List<Integer> getDescendientes(int value) {
+        List<Integer> descendientes = new ArrayList<>();
+        encontrarDescendientes(searchNode(value, tree.getRoot()), value, descendientes);
+        return descendientes;
+    }
+
+    private static void encontrarDescendientes(BinaryNode node, int target, List<Integer> descendientes) {
+        if (node == null) {
+            return;
+        }
+
+        // Buscar en el subárbol izquierdo y derecho
+        encontrarDescendientes(node.getLeftNode(), target, descendientes);
+        encontrarDescendientes(node.getRightNode(), target, descendientes);
+
+        // Agregar el nodo actual a la lista de descendientes
+        if (node.getInfo() != target) {
+            descendientes.add(node.getInfo());
+        }
     }
 
 }
