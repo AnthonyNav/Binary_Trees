@@ -95,13 +95,15 @@ public class BinaryTrees {
                     } else System.out.println("No existen elementos");
                     break;
                 case 11:
-
+                    showByLevels(tree.getRoot());
                     break;
                 case 12:
-
+                    System.out.println("Dame el nodo a eliminar");
+                    delete(scan.nextInt());
                     break;
                 case 13:
-
+                    if (isComplete(tree.getRoot())) System.out.println("Es un Arbol binario completo");
+                    else System.out.println("No es un Arbol binario completo");
                     break;
                 case 14:
                     fullLoad = false;
@@ -109,9 +111,8 @@ public class BinaryTrees {
                     out = scan.nextInt() == 2;
                     break;
                 default:
-
+                    System.out.println("Opcion no valida, intente de nuevo");
                     break;
-
             }
 
         }
@@ -120,7 +121,7 @@ public class BinaryTrees {
 
     public static boolean loadTree(int nt){
         tree = new BinaryTree();
-        String direccion = "";
+        String direccion;
         switch (nt) {
             case 1:
                 direccion = "src/main/java/com/tree/binarytrees/binaryTreesFiles/tree1.txt";
@@ -164,7 +165,7 @@ public class BinaryTrees {
             return true;
 
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }
@@ -175,6 +176,66 @@ public class BinaryTrees {
         if (n.getInfo() < value) return searchNode(value ,n.getRightNode());
         return n;
     }
+
+    public static void delete(int value){
+        BinaryNode n = searchNode(value, tree.getRoot());
+        if (n != null) {
+            if (n.getLeftNode()==null && n.getRightNode()==null){
+                tree.deleteNodeNoChildren(value, tree.getRoot());
+            } else if (n.getLeftNode()!=null && n.getRightNode()!=null) {
+                // 3rd case
+                BinaryNode k = getMaxNode(n.getLeftNode());
+                delete(k.getInfo());
+                n.setInfo(k.getInfo());
+            } else tree.deleteNodeOneChildren(value,tree.getRoot());
+        }
+    }
+
+    public static BinaryNode getMaxNode(BinaryNode n){
+        if (n == null) return null;
+        if (n.getRightNode() != null)return getMaxNode(n.getRightNode());
+        return n;
+    }
+
+    public static void showByLevels(BinaryNode n){
+        Queue q = new Queue();
+        q.insert(n.getInfo());
+        BinaryNode aux;
+        System.out.println();
+        System.out.print("Recorrido: ");
+        while (!q.isEmpty()){
+            aux = searchNode(q.delete().getInfo(), tree.getRoot());
+            System.out.print(aux.getInfo() + " ");
+            if(aux.getLeftNode()!=null) q.insert(aux.getLeftNode().getInfo());
+            if(aux.getRightNode()!=null) q.insert(aux.getRightNode().getInfo());
+        }
+    }
+
+    public static boolean isComplete(BinaryNode n){
+        if (n == null) return true;
+        Queue q = new Queue();
+        BinaryNode out;
+        boolean flag = false;
+        q.insert(n.getInfo());
+
+        while (!q.isEmpty()){
+            out = searchNode(q.delete().getInfo(), tree.getRoot());
+
+            if(flag && (out.getLeftNode() !=null || out.getRightNode()!=null)) return false;
+
+            // if exist the left node but there isn't the right node, the tree isn't complete
+            if(out.getLeftNode() == null && out.getRightNode() != null) return false;
+
+            if (out.getLeftNode() != null) q.insert(out.getLeftNode().getInfo());
+            else flag = true;
+
+            if (out.getRightNode() != null) q.insert(out.getRightNode().getInfo());
+            else flag = true;
+
+        }
+        return true;
+    }
+
 }
 
 

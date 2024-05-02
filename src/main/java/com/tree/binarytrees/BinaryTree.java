@@ -28,6 +28,42 @@ public class BinaryTree {
         else System.out.println("No es posible insertar un elemento que ya existe (Duplicado)");
         return node;
     }
+    // Delete a node (First case)
+    public BinaryNode deleteNodeNoChildren(int key, BinaryNode n){
+        if (n == null) return null;
+
+        if (n.getLeftNode() !=null && n.getLeftNode().getInfo() == key) {
+            n.setLeftNode(null);
+            return n;
+        }
+        if (n.getRightNode() !=null && n.getRightNode().getInfo() == key) {
+            n.setRightNode(null);
+            return n;
+        }
+
+        if (n.getInfo() > key) return deleteNodeNoChildren(key ,n.getLeftNode());
+        if (n.getInfo() < key) return deleteNodeNoChildren(key ,n.getRightNode());
+        return n;
+    }
+
+    public BinaryNode deleteNodeOneChildren(int key, BinaryNode n){
+        if (n == null) return null;
+
+        if (n.getLeftNode() !=null && n.getLeftNode().getInfo() == key ) {
+            BinaryNode k = (n.getLeftNode().getLeftNode() != null) ? n.getLeftNode().getLeftNode() : n.getLeftNode().getRightNode();
+            n.setLeftNode(k);
+            return n;
+        }
+        if (n.getRightNode() !=null && n.getRightNode().getInfo() == key ) {
+            BinaryNode k = (n.getRightNode().getLeftNode() != null) ? n.getRightNode().getLeftNode() : n.getRightNode().getRightNode();
+            n.setRightNode(k);
+            return n;
+        }
+
+        if (n.getInfo() > key) return deleteNodeOneChildren(key ,n.getLeftNode());
+        if (n.getInfo() < key) return deleteNodeOneChildren(key ,n.getRightNode());
+        return n;
+    }
 
 
 }
