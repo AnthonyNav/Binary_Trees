@@ -21,6 +21,11 @@ public class BinaryTrees {
         Scanner scan = new Scanner(System.in);
         boolean out = false;
         boolean fullLoad = false;
+        int valor;
+        int profundidad = 0;
+        int altura = 0;
+        int tam = 0;
+        BinaryNode nodo;
         String menu = """ 
 ********* Menu *********
 1)  Insertar elemento
@@ -58,13 +63,46 @@ public class BinaryTrees {
                     else tree.insertNode(scan.nextInt(), tree.getRoot());
                     break;
                 case 2:
-                    // Calculate the depth of a node
+                    // Calcular la profundidad de un nodo
+                    System.out.println("Ingresa un nodo: ");
+                    valor = scan.nextInt();
+                    nodo = searchNode(valor, tree.getRoot());
+                    if(nodo != null)
+                    {
+                        profundidad = tree.profundidad(tree.getRoot(), 0, valor);
+                        System.out.println("La profundidad del nodo es: " + profundidad);
+                    }else
+                    {
+                        System.out.println("El nodo no existe");
+                    }
                     break;
                 case 3:
-
+                    //Calcular la altura de un nodo
+                    System.out.println("Ingresa un nodo: ");
+                    valor = scan.nextInt();
+                    nodo = searchNode(valor, tree.getRoot());
+                    if(nodo != null)
+                    {
+                        altura = tree.altura(nodo);
+                        System.out.println("La altura del nodo es: " + altura);
+                    }else
+                    {
+                        System.out.println("El nodo no existe");
+                    }
                     break;
                 case 4:
-
+                    //Calcular el tamano de un nodo
+                    System.out.println("Ingresa un nodo: ");
+                    valor = scan.nextInt();
+                    nodo = searchNode(valor, tree.getRoot());
+                    if(nodo != null)
+                    {
+                        tam = tree.tam(nodo);
+                        System.out.println("El tamano del nodo es: " + tam);
+                    }else
+                    {
+                        System.out.println("El nodo no existe");
+                    }
                     break;
                 case 5:
                     // Obtener los hermanos de un nodo

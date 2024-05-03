@@ -64,6 +64,39 @@ public class BinaryTree {
         if (n.getInfo() < key) return deleteNodeOneChildren(key ,n.getRightNode());
         return n;
     }
+    
+    public int profundidad(BinaryNode nodo, int profundidadActual, int valor) {
+    if (nodo == null) {
+        return -1; // Si el nodo es nulo, no tiene profundidad
+    }
+    if (nodo.getInfo() == valor) {
+        return profundidadActual; // Si encontramos el nodo con el valor especificado, devolvemos la profundidad actual
+    }
+    int profundidadIzquierda = profundidad(nodo.getLeftNode(), profundidadActual + 1, valor);
+    int profundidadDerecha = profundidad(nodo.getRightNode(), profundidadActual + 1, valor);
+    // Si el nodo no está en el subárbol izquierdo ni en el derecho, devuelve -1
+    if (profundidadIzquierda == -1 && profundidadDerecha == -1) {
+        return -1;
+    }
+    // Devuelve la profundidad máxima encontrada en el subárbol izquierdo y derecho
+    return Math.max(profundidadIzquierda, profundidadDerecha);
+    }
+    
+    public int altura(BinaryNode nodo) {
+    if (nodo == null) {
+        return 0; // Altura de un nodo nulo es -1
+    }
+    int alturaIzquierda = altura(nodo.getLeftNode());
+    int alturaDerecha = altura(nodo.getRightNode());
+    return Math.max(alturaIzquierda, alturaDerecha) + 1;
+    }
 
-
+    public int tam(BinaryNode nodo) {
+    if (nodo == null) {
+        return 0; // Tamaño de un nodo nulo es 0
+    }
+    int tamIzquierda = tam(nodo.getLeftNode());
+    int tamDerecha = tam(nodo.getRightNode());
+    return tamIzquierda + tamDerecha + 1; // Sumamos 1 para contar el nodo actual
+    }
 }
