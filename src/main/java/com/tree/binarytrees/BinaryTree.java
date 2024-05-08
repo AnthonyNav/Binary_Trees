@@ -84,7 +84,7 @@ public class BinaryTree {
     
     public int altura(BinaryNode nodo) {
     if (nodo == null) {
-        return 0; // Altura de un nodo nulo es -1
+        return -1; // Altura de un nodo nulo es 0
     }
     int alturaIzquierda = altura(nodo.getLeftNode());
     int alturaDerecha = altura(nodo.getRightNode());
