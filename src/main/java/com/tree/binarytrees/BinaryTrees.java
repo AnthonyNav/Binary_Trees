@@ -174,7 +174,14 @@ public class BinaryTrees {
                     delete(scan.nextInt());
                     break;
                 case 13:
-                    if (isComplete(tree.getRoot())) System.out.println("Es un Arbol binario completo");
+                    if (isComplete(tree.getRoot())) {
+                        altura = tree.altura(tree.getRoot()) + 1;
+                        altura = (int) Math.pow(2,altura) -1;
+                        if(altura == tree.tam(tree.getRoot())){
+                            System.out.println("Es un Arbol binario completo");
+                        }
+                        else System.out.println("No es un Arbol binario completo, pero si un Cuasicompleto");
+                    }
                     else System.out.println("No es un Arbol binario completo");
                     break;
                 case 14:
